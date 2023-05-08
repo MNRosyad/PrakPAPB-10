@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.google.android.material.color.DynamicColors;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity2 extends AppCompatActivity {
@@ -42,6 +43,7 @@ public class MainActivity2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+        DynamicColors.applyToActivitiesIfAvailable(this.getApplication());
 
         firstColor = ResourcesCompat.getColor(getResources(), R.color.firstColor, null);
         secondColor = ResourcesCompat.getColor(getResources(), R.color.secondColor, null);
