@@ -3,6 +3,7 @@ package com.papb10.imageview;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -12,6 +13,8 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
     private Canvas theCanvas;
@@ -45,11 +48,13 @@ public class MainActivity extends AppCompatActivity {
         paintText.setTextSize(70);
 
         imageView = findViewById(R.id.theImage);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawSomething(v);
-            }
+        imageView.setOnClickListener(this::drawSomething);
+
+        FloatingActionButton btnActivity = findViewById(R.id.btnActivity);
+        btnActivity.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, MainActivity2.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
         });
     }
 

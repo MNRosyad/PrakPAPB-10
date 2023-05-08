@@ -11,4 +11,9 @@
     <color name="colorRectangle">#455A64</color>
     <color name="colorBackground">#FF37</color>
     <color name="colorAccent">#FF6200EE</color>
+
+    <color name="firstColor">#4CAF50</color>
+    <color name="secondColor">#8BC34A</color>
+    <color name="thirdColor">#CDDC39</color>
+    <color name="fourthColor">#FFEB3B</color>
 </resources>
