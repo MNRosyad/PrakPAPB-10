@@ -6,7 +6,6 @@ import androidx.core.content.res.ResourcesCompat;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
@@ -31,13 +30,8 @@ public class MainActivity2 extends AppCompatActivity {
     private static final int OFFSET = 120;
     private int theOffset = OFFSET;
     private static final int MULTIPLIER = 100;
-    private int width;
-    private int height;
 
-    private int firstColor;
-    private int secondColor;
-    private int thirdColor;
-    private int fourthColor;
+    private int firstColor, secondColor, thirdColor, fourthColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,18 +53,10 @@ public class MainActivity2 extends AppCompatActivity {
             startActivity(intent);
         });
 
-        mainImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startDrawing(view);
-            }
-        });
+        mainImage.setOnClickListener(this::startDrawing);
     }
 
     public void startDrawing(View view) {
-        width = view.getWidth();
-        height = view.getHeight();
-
         justBitmap = Bitmap.createBitmap(500, 500, Bitmap.Config.ARGB_8888);
         mainImage.setImageBitmap(justBitmap);
         justCanvas = new Canvas(justBitmap);
