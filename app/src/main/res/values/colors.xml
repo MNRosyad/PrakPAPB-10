@@ -12,8 +12,9 @@
     <color name="colorBackground">#FF37</color>
     <color name="colorAccent">#FF6200EE</color>
 
-    <color name="firstColor">#4CAF50</color>
-    <color name="secondColor">#8BC34A</color>
-    <color name="thirdColor">#CDDC39</color>
-    <color name="fourthColor">#FFEB3B</color>
+    <color name="firstColor">#FFF0F0F0</color>
+    <color name="secondColor">#FF884B0A</color>
+    <color name="thirdColor">#FFFF6F00</color>
+    <color name="fourthColor">#FF282828</color>
+    <color name="blueSky">#FFA1F1FF</color>
 </resources>

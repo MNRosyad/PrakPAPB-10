@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -25,13 +24,9 @@ public class MainActivity2 extends AppCompatActivity {
 
     private ImageView mainImage;
     private Bitmap justBitmap;
-    private Rect getRect = new Rect();
 
-    private static final int OFFSET = 120;
-    private int theOffset = OFFSET;
-    private static final int MULTIPLIER = 100;
-
-    private int firstColor, secondColor, thirdColor, fourthColor;
+    private int firstColor, secondColor, thirdColor, fourthColor, skyColor;
+    private int count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +38,7 @@ public class MainActivity2 extends AppCompatActivity {
         secondColor = ResourcesCompat.getColor(getResources(), R.color.secondColor, null);
         thirdColor = ResourcesCompat.getColor(getResources(), R.color.thirdColor, null);
         fourthColor = ResourcesCompat.getColor(getResources(), R.color.fourthColor, null);
+        skyColor = ResourcesCompat.getColor(getResources(), R.color.blueSky, null);
 
         mainImage = findViewById(R.id.theseImage);
 
@@ -53,50 +49,61 @@ public class MainActivity2 extends AppCompatActivity {
             startActivity(intent);
         });
 
-        mainImage.setOnClickListener(this::startDrawing);
+        mainImage.setOnClickListener(view -> {
+            startDrawing(view, count);
+            count += 1;
+        });
     }
 
-    public void startDrawing(View view) {
-        justBitmap = Bitmap.createBitmap(500, 500, Bitmap.Config.ARGB_8888);
-        mainImage.setImageBitmap(justBitmap);
-        justCanvas = new Canvas(justBitmap);
+    public void startDrawing(View view, int plCount) {
+        int width = view.getWidth();
+        int height = view.getHeight();
+        int halfWidth = width / 2;
+        int halfHeight = height / 2;
 
-        // Draw snowman's body
-        firstPaint.setColor(firstColor - MULTIPLIER * theOffset);
-        justCanvas.drawCircle(250, 400, 100, firstPaint);
-        justCanvas.drawCircle(250, 270, 70, firstPaint);
-        justCanvas.drawCircle(250, 170, 50, firstPaint);
-
-        // Draw snowman's eyes
-        secondPaint.setColor(secondColor - MULTIPLIER * theOffset);
-        justCanvas.drawCircle(230, 160, 7, secondPaint);
-        justCanvas.drawCircle(270, 160, 7, secondPaint);
-
-        // Draw snowman's nose
-        Path nosePath = new Path();
-        nosePath.moveTo(250, 180);
-        nosePath.lineTo(245, 190);
-        nosePath.lineTo(255, 190);
-        nosePath.close();
-        thirdPaint.setColor(thirdColor - MULTIPLIER * theOffset);
-        justCanvas.drawPath(nosePath, thirdPaint);
-
-        // Draw snowman's buttons
-        justCanvas.drawCircle(250, 250, 5, fourthPaint);
-        justCanvas.drawCircle(250, 270, 5, fourthPaint);
-        justCanvas.drawCircle(250, 290, 5, fourthPaint);
-
-        // Draw snowman's arms
-        secondPaint.setStrokeWidth(10);
-        justCanvas.drawLine(200, 270, 150, 230, secondPaint);
-        justCanvas.drawLine(300, 270, 350, 230, secondPaint);
-
-        // Draw snowman's hat
-        fourthPaint.setColor(fourthColor - MULTIPLIER * theOffset);
-        justCanvas.drawRect(200, 120, 300, 140, fourthPaint);
-        justCanvas.drawRect(220, 80, 280, 120, fourthPaint);
-
-        theOffset += 1;
+        if (plCount == 0) {
+            justBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+            mainImage.setImageBitmap(justBitmap);
+            justCanvas = new Canvas(justBitmap);
+            justCanvas.drawColor(skyColor);
+        } else if (plCount == 1) {
+            // Draw snowman's body
+            firstPaint.setColor(firstColor);
+            justCanvas.drawCircle(halfWidth, halfHeight + 400, 300, firstPaint);
+            justCanvas.drawCircle(halfWidth, halfHeight, 210, firstPaint);
+            justCanvas.drawCircle(halfWidth, halfHeight - 270, 160, firstPaint);
+        } else if (plCount == 2) {
+            // Draw snowman's eyes
+            secondPaint.setColor(secondColor);
+            justCanvas.drawCircle(halfWidth - 60, halfHeight - 300, 20, secondPaint);
+            justCanvas.drawCircle(halfWidth + 60, halfHeight - 300, 20, secondPaint);
+        } else if (plCount == 3) {
+            // Draw snowman's nose
+            Path nosePath = new Path();
+            nosePath.moveTo(halfWidth, halfHeight - 280);
+            nosePath.lineTo(halfWidth - 25, halfHeight - 230);
+            nosePath.lineTo(halfWidth + 25, halfHeight - 230);
+            nosePath.close();
+            thirdPaint.setColor(thirdColor);
+            justCanvas.drawPath(nosePath, thirdPaint);
+        } else if (plCount == 4) {
+            // Draw snowman's buttons
+            fourthPaint.setColor(fourthColor);
+            justCanvas.drawCircle(halfWidth, halfHeight - 120, 15, fourthPaint);
+            justCanvas.drawCircle(halfWidth, halfHeight - 60, 15, fourthPaint);
+            justCanvas.drawCircle(halfWidth, halfHeight, 15, fourthPaint);
+        } else if (plCount == 5) {
+            // Draw snowman's arms
+            secondPaint.setStrokeWidth(25);
+            secondPaint.setStrokeCap(Paint.Cap.ROUND);
+            justCanvas.drawLine(halfWidth - 180, halfHeight, halfWidth - 300, halfHeight - 170, secondPaint);
+            justCanvas.drawLine(halfWidth + 180, halfHeight, halfWidth + 300, halfHeight - 170, secondPaint);
+        } else if (plCount == 6) {
+            // Draw snowman's hat
+            justCanvas.drawRect(halfWidth - 100, halfHeight - 550, halfWidth + 100, halfHeight - 390, fourthPaint);
+            justCanvas.drawRect(halfWidth - 100, halfHeight - 490, halfWidth + 100, halfHeight - 470, thirdPaint);
+            justCanvas.drawRect(halfWidth - 150, halfHeight - 450, halfWidth + 150, halfHeight - 390, fourthPaint);
+        }
         view.invalidate();
     }
 }
